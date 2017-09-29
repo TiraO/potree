@@ -77,7 +77,7 @@ Potree.PointCloudOctreeGeometryNode.prototype.getHrcUrl = function () {
 
 Potree.PointCloudOctreeGeometryNode.prototype.getPointAttributesUrl = function () {
 	const pointAttributes = this.pcoGeometry.pointAttributes;
-	return this.getURL() + pointAttributes.toLowerCase() + '?alt=media';
+	return this.getURL() + '.' + pointAttributes.toLowerCase() + '?alt=media';
 };
 Potree.PointCloudOctreeGeometryNode.prototype.getUrlDelimiter = function () {
 	return '%2F';
@@ -92,9 +92,9 @@ Potree.PointCloudOctreeGeometryNode.prototype.getURL = function () {
 		url = this.pcoGeometry.octreeDir + this.getUrlDelimiter() + this.getHierarchyPath() +
 			this.getUrlDelimiter() + this.name;
 	} else if (version.equalOrHigher('1.4')) {
-		url = this.pcoGeometry.octreeDir + '/' + this.name;
+		url = this.pcoGeometry.octreeDir + this.getUrlDelimiter() + this.name;
 	} else if (version.upTo('1.3')) {
-		url = this.pcoGeometry.octreeDir + '/' + this.name;
+		url = this.pcoGeometry.octreeDir + this.getUrlDelimiter() + this.name;
 	}
 
 	return url;
