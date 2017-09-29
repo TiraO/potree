@@ -71,13 +71,26 @@ Potree.PointCloudOctreeGeometryNode.prototype.getBoundingBox = function () {
 	return this.boundingBox;
 };
 
+Potree.PointCloudOctreeGeometryNode.prototype.getHrcUrl = function () {
+
+};
+
+Potree.PointCloudOctreeGeometryNode.prototype.getPointAttributesUrl = function () {
+	const pointAttributes = this.pcoGeometry.pointAttributes;
+	return this.getURL() + pointAttributes.toLowerCase() + '?alt=media';
+};
+Potree.PointCloudOctreeGeometryNode.prototype.getUrlDelimiter = function () {
+	return '%2F';
+};
+
 Potree.PointCloudOctreeGeometryNode.prototype.getURL = function () {
 	var url = '';
 
 	var version = this.pcoGeometry.loader.version;
 
 	if (version.equalOrHigher('1.5')) {
-		url = this.pcoGeometry.octreeDir + '/' + this.getHierarchyPath() + '/' + this.name;
+		url = this.pcoGeometry.octreeDir + this.getUrlDelimiter() + this.getHierarchyPath() +
+			this.getUrlDelimiter() + this.name;
 	} else if (version.equalOrHigher('1.4')) {
 		url = this.pcoGeometry.octreeDir + '/' + this.name;
 	} else if (version.upTo('1.3')) {
@@ -88,6 +101,7 @@ Potree.PointCloudOctreeGeometryNode.prototype.getURL = function () {
 };
 
 Potree.PointCloudOctreeGeometryNode.prototype.getHierarchyPath = function () {
+
 	var path = 'r/';
 
 	var hierarchyStepSize = this.pcoGeometry.hierarchyStepSize;
@@ -201,7 +215,7 @@ Potree.PointCloudOctreeGeometryNode.prototype.loadHierachyThenPoints = function 
 	};
 	if ((node.level % node.pcoGeometry.hierarchyStepSize) === 0) {
 		// var hurl = node.pcoGeometry.octreeDir + "/../hierarchy/" + node.name + ".hrc";
-		var hurl = node.pcoGeometry.octreeDir + '/' + node.getHierarchyPath() + '/' + node.name + '.hrc';
+		var hurl = node.getHrcUrl();
 
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', hurl, true);

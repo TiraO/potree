@@ -25,12 +25,10 @@ Potree.LasLazLoader = class LasLazLoader {
 			return;
 		}
 
-		let pointAttributes = node.pcoGeometry.pointAttributes;
-
 		let url = node.getURL();
 
 		if (this.version.equalOrHigher('1.4')) {
-			url += '.' + pointAttributes.toLowerCase();
+			url = node.getPointAttributesUrl();
 		}
 
 		let scope = this;

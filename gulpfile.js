@@ -15,7 +15,7 @@ const connect = require('gulp-connect');
 var server;
 
 var paths = {
-	potree : [
+	potree: [
 		"src/Potree.js",
 		"src/PointCloudTree.js",
 		"src/WorkerPool.js",
